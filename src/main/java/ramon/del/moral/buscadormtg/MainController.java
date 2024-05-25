@@ -1,5 +1,6 @@
 package ramon.del.moral.buscadormtg;
 
+import jakarta.annotation.Resource;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
+import ramon.del.moral.buscadormtg.daos.CardDao;
+import ramon.del.moral.buscadormtg.entities.CardModel;
+import ramon.del.moral.buscadormtg.services.CardService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+@Component
 public class MainController {
     @FXML
     private TextField searchBar;
@@ -27,7 +33,7 @@ public class MainController {
     @FXML
     private Label nameLabel;
     @FXML///todo
-    private Label tiposLabel;//o
+    private Label tiposLabel;
     @FXML
     private Label manaCostLabel;
     @FXML
@@ -81,5 +87,14 @@ public class MainController {
                     manaCostLabel.setText(v.getManaCost());
                     oracleLabel.setText(v.getOracle());
                 });
+    }
+    @Resource
+    private CardService cardService;
+
+    @FXML
+    private void addCard(ActionEvent actionEvent) {
+        cardService.save(CardModel.builder()
+                              .name("Carta de Prueba")
+                              .build());
     }
 }
