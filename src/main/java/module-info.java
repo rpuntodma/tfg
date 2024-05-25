@@ -14,6 +14,9 @@ module ramon.del.moral.buscadormtg {
     requires static lombok;
     requires jakarta.annotation;
     requires org.hibernate.orm.core;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
+    requires spring.web;
 
     opens ramon.del.moral.buscadormtg to spring.core, spring.beans, spring.context, javafx.fxml, org.json;
     opens ramon.del.moral.buscadormtg.entities to spring.core, org.hibernate.orm.core;

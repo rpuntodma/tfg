@@ -1,6 +1,5 @@
 package ramon.del.moral.buscadormtg.services;
 
-import org.springframework.stereotype.Service;
 import ramon.del.moral.buscadormtg.entities.CardModel;
 
 import java.util.List;

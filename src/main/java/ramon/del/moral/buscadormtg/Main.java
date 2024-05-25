@@ -18,8 +18,6 @@ public class Main extends Application {
 
     @Override
     public void init() {
-//        SpringApplicationBuilder builder = new SpringApplicationBuilder(ProjectSpringBootApp.class);
-//        context = builder.run(getParameters().getRaw().toArray(new String[0]));
         context = SpringApplication.run(ProjectSpringBootApp.class);
     }
 
