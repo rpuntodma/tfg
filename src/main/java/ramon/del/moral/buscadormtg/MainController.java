@@ -1,7 +1,6 @@
 package ramon.del.moral.buscadormtg;
 
 import jakarta.annotation.Resource;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,8 +12,10 @@ import javafx.scene.input.MouseEvent;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-import ramon.del.moral.buscadormtg.daos.CardDao;
+import org.springframework.stereotype.Controller;
+import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.entities.CardModel;
+import ramon.del.moral.buscadormtg.facades.CardFacade;
 import ramon.del.moral.buscadormtg.services.CardService;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.stream.Stream;
 
 @Component
 public class MainController {
+
     @FXML
     private TextField searchBar;
     @FXML
@@ -42,6 +44,7 @@ public class MainController {
     private ImageView imagen;
 
     private List<Carta> cartas = new ArrayList<>();
+
     @FXML
     private void search(ActionEvent actionEvent) {
         String datos = searchBar.getText();
@@ -49,6 +52,7 @@ public class MainController {
         if (cartas != null) {
             cartas.clear();
         }
+
         JSONObject jsonInfo;
         int page = 0;
         try {
@@ -89,12 +93,24 @@ public class MainController {
                 });
     }
     @Resource
-    private CardService cardService;
+    private CardFacade cardFacade;
 
     @FXML
     private void addCard(ActionEvent actionEvent) {
-        cardService.save(CardModel.builder()
-                              .name("Carta de Prueba")
-                              .build());
+        String nombreCarta = listResult.getSelectionModel()
+                                       .getSelectedItem();
+        cardFacade.save(cartas.stream()
+                              .filter(v -> v.getName()
+                                            .equals(nombreCarta))
+                              .findAny()
+                              .map(v -> CardDto.builder()
+                                               .name(v.getName())
+                                               .types(v.getTipos())
+                                               .manaCost(v.getManaCost())
+                                               .oracle(v.getOracle())
+                                               .imageUrl(v.getImagen())
+                                               .build())
+                              .orElseThrow()
+        );
     }
 }
