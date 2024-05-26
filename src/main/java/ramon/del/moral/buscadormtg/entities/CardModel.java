@@ -1,5 +1,6 @@
 package ramon.del.moral.buscadormtg.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,9 +24,15 @@ public class CardModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String types;
+
     private String manaCost;
+
+    @Column(length = 1000)
     private String oracle;
+
     private String imageUrl;
 }

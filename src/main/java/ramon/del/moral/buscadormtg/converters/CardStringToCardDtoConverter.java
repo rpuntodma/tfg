@@ -15,14 +15,12 @@ import java.util.List;
 @Component
 public class CardStringToCardDtoConverter implements Converter<String, List<CardDto>> {
 
-    @Resource
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * This is used to manage the pagination, and do multiple calls to the API
      */
-    @Resource
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public List<CardDto> convert(String source) {
