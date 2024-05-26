@@ -2,7 +2,6 @@ package ramon.del.moral.buscadormtg;
 
 import javafx.application.Application;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication(scanBasePackages = "ramon.del.moral.buscadormtg")
 public class ProjectSpringBootApp {

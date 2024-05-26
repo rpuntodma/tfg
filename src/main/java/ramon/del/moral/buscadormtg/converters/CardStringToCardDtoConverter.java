@@ -3,6 +3,7 @@ package ramon.del.moral.buscadormtg.converters;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -15,12 +16,14 @@ import java.util.List;
 @Component
 public class CardStringToCardDtoConverter implements Converter<String, List<CardDto>> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Resource
+    private ObjectMapper objectMapper;
 
     /**
      * This is used to manage the pagination, and do multiple calls to the API
      */
-    private final RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public List<CardDto> convert(String source) {

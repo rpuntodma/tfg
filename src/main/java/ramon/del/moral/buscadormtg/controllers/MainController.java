@@ -1,4 +1,4 @@
-package ramon.del.moral.buscadormtg;
+package ramon.del.moral.buscadormtg.controllers;
 
 import jakarta.annotation.Resource;
 import javafx.event.ActionEvent;
@@ -9,21 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
-import ramon.del.moral.buscadormtg.entities.CardModel;
 import ramon.del.moral.buscadormtg.facades.CardFacade;
-import ramon.del.moral.buscadormtg.services.CardService;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 @Component
 public class MainController {
@@ -43,7 +35,6 @@ public class MainController {
     @FXML
     private ImageView imagen;
 
-    private List<Carta> cartas = new ArrayList<>();
     private List<CardDto> cards = new ArrayList<>();
 
     @FXML
@@ -65,34 +56,6 @@ public class MainController {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        if (cartas != null) {
-//            cartas.clear();
-//        }
-//
-//        JSONObject jsonInfo;
-//        int page = 0;
-//        try {
-//            do {
-//                page++;
-//                String info = ApiServices.search(datos + "&page=" + page);
-//                jsonInfo = new JSONObject(info);
-//                JSONArray datosCarta = jsonInfo.getJSONArray("data");
-//                cartas.addAll(datosCarta.toList().stream()
-//                        .map(v -> (Map<?, ?>) v)
-//                        .filter(v -> v.get("image_uris") != null)
-//                        .map(v -> new Carta(
-//                                (String) v.get("name"),
-//                                (String) v.get("type_line"),
-//                                (String) v.get("mana_cost"),
-//                                (String) v.get("oracle_text"),//Acordarme de que sara me dijo que nuullpointer puede darse aqui.
-//                                (String) ((Map<?, ?>) v.get("image_uris")).get("normal")
-//                        )).toList()
-//                );
-//                listResult.getItems().addAll(cartas.stream().map(Carta::getName).toList());
-//            } while (jsonInfo.getBoolean("has_more"));
-//        } catch (URISyntaxException | IOException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     @FXML

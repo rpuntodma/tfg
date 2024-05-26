@@ -19,6 +19,7 @@ module ramon.del.moral.buscadormtg {
     requires spring.web;
 
     opens ramon.del.moral.buscadormtg to spring.core, spring.beans, spring.context, javafx.fxml, org.json;
+    opens ramon.del.moral.buscadormtg.controllers to javafx.fxml, org.json, spring.beans, spring.context, spring.core;
     opens ramon.del.moral.buscadormtg.entities to spring.core, org.hibernate.orm.core;
     opens ramon.del.moral.buscadormtg.services.impl to spring.core, org.hibernate.orm.core;
     opens ramon.del.moral.buscadormtg.converters to spring.core;
@@ -32,4 +33,5 @@ module ramon.del.moral.buscadormtg {
     exports ramon.del.moral.buscadormtg.converters;
     exports ramon.del.moral.buscadormtg.facades;
     exports ramon.del.moral.buscadormtg.facades.impl;
+    exports ramon.del.moral.buscadormtg.controllers;
 }
