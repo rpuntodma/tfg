@@ -44,50 +44,66 @@ public class MainController {
     private ImageView imagen;
 
     private List<Carta> cartas = new ArrayList<>();
+    private List<CardDto> cards = new ArrayList<>();
 
     @FXML
     private void search(ActionEvent actionEvent) {
         String datos = searchBar.getText();
         listResult.getItems().clear();
-        if (cartas != null) {
-            cartas.clear();
+
+        if (cards != null) {
+            cards.clear();
         }
 
-        JSONObject jsonInfo;
-        int page = 0;
         try {
-            do {
-                page++;
-                String info = ApiServices.search(datos + "&page=" + page);
-                jsonInfo = new JSONObject(info);
-                JSONArray datosCarta = jsonInfo.getJSONArray("data");
-                cartas.addAll(datosCarta.toList().stream()
-                        .map(v -> (Map<?, ?>) v)
-                        .filter(v -> v.get("image_uris") != null)
-                        .map(v -> new Carta(
-                                (String) v.get("name"),
-                                (String) v.get("type_line"),
-                                (String) v.get("mana_cost"),
-                                (String) v.get("oracle_text"),//Acordarme de que sara me dijo que nuullpointer puede darse aqui.
-                                (String) ((Map<?, ?>) v.get("image_uris")).get("normal")
-                        )).toList()
-                );
-                listResult.getItems().addAll(cartas.stream().map(Carta::getName).toList());
-            } while (jsonInfo.getBoolean("has_more"));
-        } catch (URISyntaxException | IOException e) {
+            cards = cardFacade.searchCardsByName(datos);
+            listResult.getItems()
+                      .addAll(cards.stream()
+                                   .filter(cardDto -> !cardDto.getImageUrl().isEmpty())
+                                   .map(CardDto::getName)
+                                   .toList());
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+//        if (cartas != null) {
+//            cartas.clear();
+//        }
+//
+//        JSONObject jsonInfo;
+//        int page = 0;
+//        try {
+//            do {
+//                page++;
+//                String info = ApiServices.search(datos + "&page=" + page);
+//                jsonInfo = new JSONObject(info);
+//                JSONArray datosCarta = jsonInfo.getJSONArray("data");
+//                cartas.addAll(datosCarta.toList().stream()
+//                        .map(v -> (Map<?, ?>) v)
+//                        .filter(v -> v.get("image_uris") != null)
+//                        .map(v -> new Carta(
+//                                (String) v.get("name"),
+//                                (String) v.get("type_line"),
+//                                (String) v.get("mana_cost"),
+//                                (String) v.get("oracle_text"),//Acordarme de que sara me dijo que nuullpointer puede darse aqui.
+//                                (String) ((Map<?, ?>) v.get("image_uris")).get("normal")
+//                        )).toList()
+//                );
+//                listResult.getItems().addAll(cartas.stream().map(Carta::getName).toList());
+//            } while (jsonInfo.getBoolean("has_more"));
+//        } catch (URISyntaxException | IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @FXML
     private void selectCard(MouseEvent mouseEvent) {
         String nombreCarta = listResult.getSelectionModel().getSelectedItem();
-        cartas.stream()
+        cards.stream()
                 .filter(v -> v.getName().equals(nombreCarta))
                 .findAny().ifPresent(v -> {
-                    imagen.setImage(new Image(v.getImagen()));
+                    imagen.setImage(new Image(v.getImageUrl()));
                     nameLabel.setText(v.getName());
-                    tiposLabel.setText(v.getTipos());
+                    tiposLabel.setText(v.getTypes());
                     manaCostLabel.setText(v.getManaCost());
                     oracleLabel.setText(v.getOracle());
                 });
@@ -99,16 +115,16 @@ public class MainController {
     private void addCard(ActionEvent actionEvent) {
         String nombreCarta = listResult.getSelectionModel()
                                        .getSelectedItem();
-        cardFacade.save(cartas.stream()
+        cardFacade.save(cards.stream()
                               .filter(v -> v.getName()
                                             .equals(nombreCarta))
                               .findAny()
                               .map(v -> CardDto.builder()
                                                .name(v.getName())
-                                               .types(v.getTipos())
+                                               .types(v.getTypes())
                                                .manaCost(v.getManaCost())
                                                .oracle(v.getOracle())
-                                               .imageUrl(v.getImagen())
+                                               .imageUrl(v.getImageUrl())
                                                .build())
                               .orElseThrow()
         );
