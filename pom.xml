@@ -98,7 +98,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>ramon.del.moral.buscadormtg/ramon.del.moral.buscadormtg.Main
+                            <mainClass>ramon.del.moral.buscadormtg/ramon.del.moral.buscadormtg.ProjectJavaFxApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

@@ -20,6 +20,11 @@ import java.util.List;
 @Component
 public class MainController {
 
+    @Resource
+    private CardFacade cardFacade;
+//    @Resource
+//    private CollectionFacade
+
     @FXML
     private TextField searchBar;
     @FXML
@@ -71,25 +76,25 @@ public class MainController {
                     oracleLabel.setText(v.getOracle());
                 });
     }
-    @Resource
-    private CardFacade cardFacade;
 
     @FXML
     private void addCard(ActionEvent actionEvent) {
         String nombreCarta = listResult.getSelectionModel()
                                        .getSelectedItem();
-        cardFacade.save(cards.stream()
-                              .filter(v -> v.getName()
-                                            .equals(nombreCarta))
-                              .findAny()
-                              .map(v -> CardDto.builder()
-                                               .name(v.getName())
-                                               .types(v.getTypes())
-                                               .manaCost(v.getManaCost())
-                                               .oracle(v.getOracle())
-                                               .imageUrl(v.getImageUrl())
-                                               .build())
-                              .orElseThrow()
-        );
+        try {
+            cardFacade.save(cards.stream()
+                                  .filter(v -> v.getName()
+                                                .equals(nombreCarta))
+                                  .findAny()
+                                  .orElseThrow()
+            );
+        } catch (Exception e) {
+            System.out.println("Nada que guardar");
+        }
+    }
+
+    @FXML
+    private void createCollection(ActionEvent actionEvent) {
+
     }
 }

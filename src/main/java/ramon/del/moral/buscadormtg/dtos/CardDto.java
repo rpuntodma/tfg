@@ -2,9 +2,11 @@ package ramon.del.moral.buscadormtg.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode(of = { "name", "types", "manaCost" })
 @Builder
 @AllArgsConstructor
 public class CardDto {

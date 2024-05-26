@@ -11,7 +11,7 @@ public class CardDtoToCardModelConverter implements Converter<CardDto, CardModel
 
     @Override
     public CardModel convert(CardDto cardDto) {
-        Assert.notNull(cardDto, "Source CardDto can't be null");
+        Assert.notNull(cardDto, "Source CardDto  must not be null");
 
         return CardModel.builder()
                         .name(cardDto.getName())
