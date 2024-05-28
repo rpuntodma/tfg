@@ -20,7 +20,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#addCard" text="Add selected" />
             <Button mnemonicParsing="false" onAction="#createCollection" text="Create Collection" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" onAction="#passSearch" text="Pass search" />
          </children>
       </VBox>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" HBox.hgrow="ALWAYS">

@@ -3,13 +3,18 @@ package ramon.del.moral.buscadormtg.controllers;
 import jakarta.annotation.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
+import ramon.del.moral.buscadormtg.ProjectJavaFxApp;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.facades.CardFacade;
 
@@ -91,6 +96,22 @@ public class MainController {
         } catch (Exception e) {
             System.out.println("Nada que guardar");
         }
+    }
+
+    @FXML
+    private void passSearch(ActionEvent actionEvent) throws IOException {
+        String searchText = searchBar.getText();
+        if (searchText != null) {
+            FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource("fxml/collections-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+            CollectionController collcon = fxmlLoader.getController();
+            collcon.setWellcome(searchText);
+            stage.setTitle("Collecciones!");
+            stage.setScene(scene);
+            stage.show();
+        }
+
     }
 
     @FXML
