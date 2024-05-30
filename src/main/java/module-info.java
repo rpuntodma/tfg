@@ -17,6 +17,7 @@ module ramon.del.moral.buscadormtg {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires spring.web;
+    requires spring.data.commons;
 
     opens ramon.del.moral.buscadormtg to spring.core, spring.beans, spring.context, javafx.fxml, org.json;
     opens ramon.del.moral.buscadormtg.controllers to javafx.fxml, org.json, spring.beans, spring.context, spring.core;

@@ -1,9 +1,11 @@
 package ramon.del.moral.buscadormtg.services;
 
+import ramon.del.moral.buscadormtg.entities.CardModel;
 import ramon.del.moral.buscadormtg.entities.CollectionModel;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface CollectionService {
 
@@ -14,4 +16,6 @@ public interface CollectionService {
     CollectionModel save(CollectionModel collection);
 
     void deleteById(Long id);
+
+    Set<CardModel> findCardsByCollectionId(Long id);
 }

@@ -63,7 +63,7 @@
                   <HBox maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="287.0" spacing="5.0">
                      <children>
                         <TextField fx:id="searchBar" maxWidth="1.7976931348623157E308" onAction="#searchCards" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" text="SE" />
+                        <Button mnemonicParsing="false" onAction="#searchCards" text="SE" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -139,4 +139,15 @@
          </BorderPane.margin>
       </HBox>
    </center>
+   <bottom>
+      <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="900.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <Label text="Error message" />
+         </children>
+         <padding>
+            <Insets left="60.0" />
+         </padding>
+      </HBox>
+   </bottom>
 </BorderPane>

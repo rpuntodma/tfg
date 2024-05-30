@@ -5,13 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.facades.CardFacade;
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CardController {
@@ -31,9 +32,9 @@ public class CardController {
     private CardFacade cardFacade;
 
     @FXML
-    private ComboBox<String> collections;
+    private ComboBox<CollectionDto> collections;
     @FXML
-    private ListView<String> collectionCards;
+    private ListView<CardDto> collectionCards;
 
     @FXML
     private TextField searchBar;
@@ -57,6 +58,64 @@ public class CardController {
                                                        .name("test")
                                                        .cards(new HashSet<>())
                                                        .build();
+
+    @FXML
+    private void initialize() {
+
+        collections.setCellFactory(collectionDtoListView -> new ListCell<>() {
+            @Override
+            protected void updateItem(CollectionDto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+
+        collections.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(CollectionDto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+
+        collections.getItems()
+                   .addAll(collectionFacade.findAll());
+        if (!collections.getItems()
+                        .isEmpty()) {
+            collections.getSelectionModel().select(0);
+        }
+
+        collectionDto = collections.getItems()
+                                   .isEmpty() ?
+                CollectionDto.builder()
+                             .name("New Collection")
+                             .cards(new HashSet<>())
+                             .build()
+                : collections.getSelectionModel()
+                             .getSelectedItem();
+
+        collectionCards.setCellFactory(cardDtoListView -> new ListCell<>() {
+            @Override
+            protected void updateItem(CardDto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+        collectionCards.getItems()
+                       .addAll(collectionFacade.findCardsByCollectionId(collectionDto != null ? collectionDto.getId() : 1L));
+    }
 
     @FXML
     private void searchCards(ActionEvent actionEvent) {
@@ -84,15 +143,15 @@ public class CardController {
         String nombreCarta = searchResult.getSelectionModel()
                                          .getSelectedItem();
         cards.stream()
-             .filter(v -> v.getName()
-                           .equals(nombreCarta))
+             .filter(cardDto -> cardDto.getName()
+                                       .equals(nombreCarta))
              .findAny()
-             .ifPresent(v -> {
-                 imageView.setImage(new Image(v.getImageUrl()));
-                 nameLabel.setText(v.getName());
-                 typesLabel.setText(v.getTypes());
-                 manaCostLabel.setText(v.getManaCost());
-                 oracleLabel.setText(v.getOracle());
+             .ifPresent(cardDto -> {
+                 imageView.setImage(new Image(cardDto.getImageUrl()));
+                 nameLabel.setText(cardDto.getName());
+                 typesLabel.setText(cardDto.getTypes());
+                 manaCostLabel.setText(cardDto.getManaCost());
+                 oracleLabel.setText(cardDto.getOracle());
              });
     }
 
@@ -101,15 +160,20 @@ public class CardController {
         String nombreCarta = searchResult.getSelectionModel()
                                          .getSelectedItem();
         try {
-            collectionDto = collectionFacade.findById(collectionDto.getId()).orElse(collectionDto);
-            System.out.println("afasf");
             collectionDto.getCards()
                          .add(cards.stream()
                                    .filter(v -> v.getName()
                                                  .equals(nombreCarta))
                                    .findAny()
                                    .orElseThrow());
-            collectionFacade.save(collectionDto);
+            collectionDto = collectionFacade.save(collectionDto);
+            if (collectionDto.getCards().size() != collectionCards.getItems().size()) {
+                collectionCards.getItems().add(cards.stream()
+                                                    .filter(v -> v.getName()
+                                                                  .equals(nombreCarta))
+                                                    .findAny()
+                                                    .orElseThrow());
+            }
         } catch (Exception e) {
             System.out.println("Nada que guardar");
         }
