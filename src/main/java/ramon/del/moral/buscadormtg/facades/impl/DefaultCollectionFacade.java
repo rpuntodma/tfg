@@ -26,15 +26,15 @@ public class DefaultCollectionFacade implements CollectionFacade {
     @Override
     public List<CollectionDto> findAll() {
         return collectionService.findAll()
-                            .stream()
-                            .map(collectionModelToCollectionDtoConverter::convert)
-                            .collect(Collectors.toList());
+                                .stream()
+                                .map(collectionModelToCollectionDtoConverter::convert)
+                                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<CollectionDto> findById(Long id) {
         return collectionService.findById(id)
-                            .map(collectionModelToCollectionDtoConverter::convert);
+                                .map(collectionModelToCollectionDtoConverter::convert);
     }
 
     @Override

@@ -53,6 +53,7 @@ public class CardController {
 
     private List<CardDto> cards = new ArrayList<>();
     private CollectionDto collectionDto = CollectionDto.builder()
+                                                       .id(1L)
                                                        .name("test")
                                                        .cards(new HashSet<>())
                                                        .build();
@@ -100,6 +101,8 @@ public class CardController {
         String nombreCarta = searchResult.getSelectionModel()
                                          .getSelectedItem();
         try {
+            collectionDto = collectionFacade.findById(collectionDto.getId()).orElse(collectionDto);
+            System.out.println("afasf");
             collectionDto.getCards()
                          .add(cards.stream()
                                    .filter(v -> v.getName()

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -13,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class CollectionDto {
 
+    private Long id;
     @NonNull
     private String name;
     private Set<CardDto> cards;

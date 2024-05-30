@@ -11,6 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CardDto {
 
+    private Long id;
     private String name;
     private String types;
     private String manaCost;

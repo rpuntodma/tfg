@@ -20,6 +20,7 @@ public class CollectionModelToCollectionDtoConverter implements Converter<Collec
         Assert.notNull(collectionModel, "Source CollectionModel must not be null");
 
         return CollectionDto.builder()
+                            .id(collectionModel.getId())
                             .name(collectionModel.getName())
                             .cards(collectionModel.getCards()
                                                   .stream()

@@ -37,13 +37,13 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label text="My Collections" />
                   <ComboBox fx:id="collections" maxWidth="1.7976931348623157E308" minWidth="-Infinity" promptText="Collection" />
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ListView fx:id="collectionCards" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <ListView fx:id="collectionCards" minWidth="-Infinity" prefHeight="200.0" prefWidth="212.0" HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="70.0" spacing="20.0">
                            <children>
                               <Button mnemonicParsing="false" text="DEL" />
@@ -57,7 +57,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label text="Busqueda en Scryfall" />
                   <HBox maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="287.0" spacing="5.0">
@@ -68,7 +68,7 @@
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <ListView fx:id="searchResult" onMouseClicked="#selectCard" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <ListView fx:id="searchResult" minWidth="-Infinity" onMouseClicked="#selectCard" prefHeight="200.0" prefWidth="212.0" HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER" prefHeight="438.0" prefWidth="68.0" spacing="20.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#addCard" text="AD" />
@@ -81,9 +81,9 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+            <VBox maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
-                  <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0">
+                  <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="50.0">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

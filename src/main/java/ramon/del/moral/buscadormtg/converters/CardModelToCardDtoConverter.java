@@ -14,6 +14,7 @@ public class CardModelToCardDtoConverter implements Converter<CardModel, CardDto
         Assert.notNull(cardModel, "Source cardModel  must not be null");
 
         return CardDto.builder()
+                      .id(cardModel.getId())
                       .name(cardModel.getName())
                       .types(cardModel.getTypes())
                       .manaCost(cardModel.getManaCost())
