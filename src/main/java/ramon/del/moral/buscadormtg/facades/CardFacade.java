@@ -1,6 +1,7 @@
 package ramon.del.moral.buscadormtg.facades;
 
 import ramon.del.moral.buscadormtg.dtos.CardDto;
+import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface CardFacade {
 
     Optional<CardDto> findById(Long id);
 
-    CardDto save(CardDto card);
+    CardDto save(CardDto card, CollectionDto collection);
 
     void deleteById(Long id);
 

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -14,6 +15,5 @@ public class CollectionDto {
 
     @NonNull
     private String name;
-    @NonNull
     private Set<CardDto> cards;
 }

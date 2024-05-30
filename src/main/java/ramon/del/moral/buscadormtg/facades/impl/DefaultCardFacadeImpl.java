@@ -1,17 +1,22 @@
 package ramon.del.moral.buscadormtg.facades.impl;
 
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ramon.del.moral.buscadormtg.converters.CardDtoToCardModelConverter;
 import ramon.del.moral.buscadormtg.converters.CardModelToCardDtoConverter;
 import ramon.del.moral.buscadormtg.converters.CardStringToCardDtoConverter;
+import ramon.del.moral.buscadormtg.converters.CollectionDtoToCollectionModelConverter;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
+import ramon.del.moral.buscadormtg.dtos.CollectionDto;
+import ramon.del.moral.buscadormtg.entities.CardModel;
 import ramon.del.moral.buscadormtg.facades.CardFacade;
 import ramon.del.moral.buscadormtg.services.CardService;
 import ramon.del.moral.buscadormtg.services.ScryfallService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,6 +33,8 @@ public class DefaultCardFacadeImpl implements CardFacade {
     private CardDtoToCardModelConverter cardDtoToCardModelConverter;
     @Resource
     private CardStringToCardDtoConverter cardStringToCardDtoConverter;
+    @Autowired
+    private CollectionDtoToCollectionModelConverter collectionDtoToCollectionModelConverter;
 
     @Override
     public List<CardDto> findAll() {
@@ -44,11 +51,13 @@ public class DefaultCardFacadeImpl implements CardFacade {
     }
 
     @Override
-    public CardDto save(CardDto cardDto) {
-        return cardModelToCardDtoConverter
-                .convert(cardService
-                        .save(cardDtoToCardModelConverter
-                                .convert(cardDto)));
+    public CardDto save(CardDto cardDto, CollectionDto collectionDto) {
+        CardModel cardModel = cardDtoToCardModelConverter.convert(cardDto);
+        Objects.requireNonNull(cardModel)
+               .getCollections()
+               .add(collectionDtoToCollectionModelConverter.convert(collectionDto));
+
+        return cardModelToCardDtoConverter.convert(cardService.save(cardModel));
     }
 
     @Override
@@ -58,7 +67,8 @@ public class DefaultCardFacadeImpl implements CardFacade {
 
     @Override
     public List<CardDto> searchCardsByName(String name) throws IOException, InterruptedException {
-
-        return cardStringToCardDtoConverter.convert(scryfallService.searchCards(name));
+        return cardStringToCardDtoConverter
+                .convert(scryfallService
+                        .searchCards(name.replaceAll(" +", "%20")));
     }
 }

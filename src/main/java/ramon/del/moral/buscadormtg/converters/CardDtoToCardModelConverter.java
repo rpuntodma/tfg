@@ -6,6 +6,8 @@ import org.springframework.util.Assert;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.entities.CardModel;
 
+import java.util.ArrayList;
+
 @Component
 public class CardDtoToCardModelConverter implements Converter<CardDto, CardModel> {
 
@@ -19,6 +21,7 @@ public class CardDtoToCardModelConverter implements Converter<CardDto, CardModel
                         .manaCost(cardDto.getManaCost())
                         .oracle(cardDto.getOracle())
                         .imageUrl(cardDto.getImageUrl())
+                        .collections(new ArrayList<>())
                         .build();
     }
 }
