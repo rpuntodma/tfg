@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CardController {
@@ -53,11 +52,7 @@ public class CardController {
     private ImageView imageView;
 
     private List<CardDto> cards = new ArrayList<>();
-    private CollectionDto collectionDto = CollectionDto.builder()
-                                                       .id(1L)
-                                                       .name("test")
-                                                       .cards(new HashSet<>())
-                                                       .build();
+    private CollectionDto collectionDto;
 
     @FXML
     private void initialize() {
@@ -177,5 +172,10 @@ public class CardController {
         } catch (Exception e) {
             System.out.println("Nada que guardar");
         }
+    }
+
+    public void setSelectedCollection(CollectionDto collectionDto) {
+        this.collectionDto = collectionDto;
+        this.collections.getItems().stream().filter
     }
 }

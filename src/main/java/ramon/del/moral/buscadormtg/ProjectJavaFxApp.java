@@ -22,7 +22,7 @@ public class ProjectJavaFxApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource("fxml/cards-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource("fxml/collections-view.fxml"));
         fxmlLoader.setControllerFactory(context::getBean);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Buscador!");

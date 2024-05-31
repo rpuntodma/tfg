@@ -46,6 +46,6 @@ public class CollectionModel {
     private Set<CardModel> cards = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserModel userId;
 }
