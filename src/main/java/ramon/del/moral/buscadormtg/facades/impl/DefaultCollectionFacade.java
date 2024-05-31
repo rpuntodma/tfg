@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import ramon.del.moral.buscadormtg.converters.CardModelToCardDtoConverter;
 import ramon.del.moral.buscadormtg.converters.CollectionDtoToCollectionModelConverter;
 import ramon.del.moral.buscadormtg.converters.CollectionModelToCollectionDtoConverter;
-import ramon.del.moral.buscadormtg.daos.CollectionDao;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.facades.CollectionFacade;
+import ramon.del.moral.buscadormtg.services.CollectionService;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class DefaultCollectionFacade implements CollectionFacade {
 
     @Resource
-    private CollectionDao collectionService;
+    private CollectionService collectionService;
     @Resource
     private CollectionDtoToCollectionModelConverter collectionDtoToCollectionModelConverter;
     @Resource
