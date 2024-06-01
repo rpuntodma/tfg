@@ -48,8 +48,8 @@
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="880.0" spacing="40.0">
                <children>
                   <Label text="Collection Name" />
-                  <TextField fx:id="nameTextField" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Create" />
+                  <TextField fx:id="nameTextField" onAction="#createCollection" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#createCollection" text="Create" />
                </children>
                <padding>
                   <Insets left="200.0" right="200.0" />

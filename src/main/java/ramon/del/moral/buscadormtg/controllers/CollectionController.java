@@ -58,7 +58,7 @@ public class CollectionController {
                                                                   .getWindow();
             CardController cardController = fxmlLoader.getController();
 
-            cardController.
+            cardController.setSelectedCollection(collectionDtoNew);
             stage.setTitle("Collecciones!");
             stage.setScene(scene);
             stage.show();

@@ -85,7 +85,8 @@ public class CardController {
                    .addAll(collectionFacade.findAll());
         if (!collections.getItems()
                         .isEmpty()) {
-            collections.getSelectionModel().select(0);
+            collections.getSelectionModel()
+                       .select(0);
         }
 
         collectionDto = collections.getItems()
@@ -162,12 +163,15 @@ public class CardController {
                                    .findAny()
                                    .orElseThrow());
             collectionDto = collectionFacade.save(collectionDto);
-            if (collectionDto.getCards().size() != collectionCards.getItems().size()) {
-                collectionCards.getItems().add(cards.stream()
-                                                    .filter(v -> v.getName()
-                                                                  .equals(nombreCarta))
-                                                    .findAny()
-                                                    .orElseThrow());
+            if (collectionDto.getCards()
+                             .size() != collectionCards.getItems()
+                                                       .size()) {
+                collectionCards.getItems()
+                               .add(cards.stream()
+                                         .filter(v -> v.getName()
+                                                       .equals(nombreCarta))
+                                         .findAny()
+                                         .orElseThrow());
             }
         } catch (Exception e) {
             System.out.println("Nada que guardar");
@@ -176,6 +180,6 @@ public class CardController {
 
     public void setSelectedCollection(CollectionDto collectionDto) {
         this.collectionDto = collectionDto;
-        this.collections.getItems().stream().filter
+        this.collections.setValue(collectionDto);
     }
 }
