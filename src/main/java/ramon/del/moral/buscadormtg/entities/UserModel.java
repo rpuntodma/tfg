@@ -1,14 +1,9 @@
 package ramon.del.moral.buscadormtg.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,8 +12,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +32,6 @@ public class UserModel {
     private String name;
     private String password;
 
-    @OneToMany(mappedBy = "userId")
-    private Set<CollectionModel> userCollections = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private List<CollectionModel> userCollections = new ArrayList<>();
 }

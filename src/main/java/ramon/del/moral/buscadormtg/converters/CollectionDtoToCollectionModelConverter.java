@@ -26,6 +26,7 @@ public class CollectionDtoToCollectionModelConverter implements Converter<Collec
                                                   .stream()
                                                   .map(cardDtoToCardModelConverter::convert)
                                                   .collect(Collectors.toSet()))
+                              .userId()
                               .build();
     }
 }

@@ -16,6 +16,7 @@ import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.facades.CollectionFacade;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 @Component
 public class CollectionController {
@@ -49,10 +50,13 @@ public class CollectionController {
         if (nameTextField.getText().isEmpty()) {
             System.out.println("vacio");
         } else {
-            CollectionDto collectionDtoNew = CollectionDto.builder().name(nameTextField.getText()).build();
+            CollectionDto collectionDtoNew = CollectionDto.builder()
+                                                          .name(nameTextField.getText())
+                                                          .cards(new HashSet<>())
+                                                          .build();
             collectionDtoNew = collectionFacade.save(collectionDtoNew);
 
-            FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource("fxml/collections-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource("fxml/cards-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
                                                                   .getWindow();

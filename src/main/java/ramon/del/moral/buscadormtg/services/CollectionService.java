@@ -18,4 +18,6 @@ public interface CollectionService {
     void deleteById(Long id);
 
     Set<CardModel> findCardsByCollectionId(Long id);
+
+    List<CollectionModel> findByUserId(Long userId);
 }

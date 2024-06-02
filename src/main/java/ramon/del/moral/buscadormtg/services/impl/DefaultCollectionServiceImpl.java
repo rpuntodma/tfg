@@ -8,8 +8,10 @@ import ramon.del.moral.buscadormtg.entities.CollectionModel;
 import ramon.del.moral.buscadormtg.services.CollectionService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultCollectionServiceImpl implements CollectionService {
@@ -42,6 +44,15 @@ public class DefaultCollectionServiceImpl implements CollectionService {
         return collectionDao.findById(id)
                             .orElseThrow()
                             .getCards();
+    }
+
+    @Override
+    public List<CollectionModel> findByUserId(Long userId) {
+        return collectionDao.findAll()
+                            .stream()
+                            .filter(collectionModel -> Objects.equals(collectionModel.getUser()
+                                                                                     .getId(), userId))
+                            .collect(Collectors.toList());
     }
 
 }

@@ -47,5 +47,5 @@ public class CollectionModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserModel userId;
+    private UserModel user;
 }

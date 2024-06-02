@@ -1,21 +1,22 @@
 package ramon.del.moral.buscadormtg.dtos;
 
+import ch.qos.logback.core.joran.spi.NoAutoStart;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Builder
 @AllArgsConstructor
-public class CollectionDto {
+public class UserDto {
 
     private Long id;
     @NonNull
     private String name;
-    private Set<CardDto> cards;
     @NonNull
-    private UserDto user;
+    private String password;
+    private List<CollectionDto> collections;
 }
