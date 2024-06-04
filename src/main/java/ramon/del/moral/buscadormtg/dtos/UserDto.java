@@ -18,5 +18,4 @@ public class UserDto {
     private String name;
     @NonNull
     private String password;
-    private List<CollectionDto> collections;
 }

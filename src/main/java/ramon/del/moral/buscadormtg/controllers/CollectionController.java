@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 import ramon.del.moral.buscadormtg.ProjectJavaFxApp;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
+import ramon.del.moral.buscadormtg.dtos.UserDto;
 import ramon.del.moral.buscadormtg.facades.CollectionFacade;
 
 import java.io.IOException;
@@ -53,6 +54,11 @@ public class CollectionController {
             CollectionDto collectionDtoNew = CollectionDto.builder()
                                                           .name(nameTextField.getText())
                                                           .cards(new HashSet<>())
+                                                          .user(UserDto.builder()
+                                                                       .id(1L)
+                                                                       .name("ramon")
+                                                                       .password("ramon")
+                                                                       .build())
                                                           .build();
             collectionDtoNew = collectionFacade.save(collectionDtoNew);
 

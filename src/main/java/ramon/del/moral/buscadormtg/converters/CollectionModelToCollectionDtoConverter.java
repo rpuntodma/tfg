@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.entities.CollectionModel;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -14,6 +15,9 @@ public class CollectionModelToCollectionDtoConverter implements Converter<Collec
 
     @Resource
     CardModelToCardDtoConverter cardModelToCardDtoConverter;
+
+    @Resource
+    UserModelToUserDtoConverter userModelToUserDtoConverter;
 
     @Override
     public CollectionDto convert(CollectionModel collectionModel) {
@@ -26,6 +30,7 @@ public class CollectionModelToCollectionDtoConverter implements Converter<Collec
                                                   .stream()
                                                   .map(cardModelToCardDtoConverter::convert)
                                                   .collect(Collectors.toSet()))
+                            .user(Objects.requireNonNull(userModelToUserDtoConverter.convert(collectionModel.getUser())))
                             .build();
     }
 }

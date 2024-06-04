@@ -9,14 +9,14 @@ import ramon.del.moral.buscadormtg.entities.UserModel;
 import java.util.stream.Collectors;
 
 @Component
-public class UserModelToUserDtoConverter implements Converter<UserModel, UserDto> {
+public class UserDtoToUserModelConverter implements Converter<UserDto, UserModel> {
 
     @Override
-    public UserDto convert(UserModel userModel) {
-        return UserDto.builder()
-                      .id(userModel.getId())
-                      .name(userModel.getName())
-                      .password(userModel.getPassword())
+    public UserModel convert(UserDto userDto) {
+        return UserModel.builder()
+                      .id(userDto.getId())
+                      .name(userDto.getName())
+                      .password(userDto.getPassword())
                       .build();
     }
 }

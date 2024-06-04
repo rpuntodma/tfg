@@ -15,6 +15,9 @@ public class CollectionDtoToCollectionModelConverter implements Converter<Collec
     @Resource
     private CardDtoToCardModelConverter cardDtoToCardModelConverter;
 
+    @Resource
+    private UserDtoToUserModelConverter userDtoToUserModelConverter;
+
     @Override
     public CollectionModel convert(CollectionDto collectionDto) {
         Assert.notNull(collectionDto, "Source CollectionDto must not be null");
@@ -26,7 +29,7 @@ public class CollectionDtoToCollectionModelConverter implements Converter<Collec
                                                   .stream()
                                                   .map(cardDtoToCardModelConverter::convert)
                                                   .collect(Collectors.toSet()))
-                              .userId()
+                              .user(userDtoToUserModelConverter.convert(collectionDto.getUser()))
                               .build();
     }
 }
