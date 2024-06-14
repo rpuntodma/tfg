@@ -16,6 +16,4 @@ public interface CollectionFacade {
     CollectionDto save(CollectionDto collectionDto);
 
     void deleteById(Long id);
-
-    Set<CardDto> findCardsByCollectionId(Long collectionId);
 }

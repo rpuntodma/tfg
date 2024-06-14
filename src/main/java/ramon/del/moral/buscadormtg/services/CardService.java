@@ -14,4 +14,6 @@ public interface CardService {
     CardModel save(CardModel card);
 
     void deleteById(Long id);
+
+    List<CardModel> findCardsByCollectionId(Long id);
 }

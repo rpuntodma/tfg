@@ -1,19 +1,16 @@
 package ramon.del.moral.buscadormtg.facades.impl;
 
 import jakarta.annotation.Resource;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ramon.del.moral.buscadormtg.converters.CardModelToCardDtoConverter;
-import ramon.del.moral.buscadormtg.converters.CollectionDtoToCollectionModelConverter;
-import ramon.del.moral.buscadormtg.converters.CollectionModelToCollectionDtoConverter;
-import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
+import ramon.del.moral.buscadormtg.entities.CollectionModel;
 import ramon.del.moral.buscadormtg.facades.CollectionFacade;
 import ramon.del.moral.buscadormtg.services.CollectionService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,11 +19,9 @@ public class DefaultCollectionFacade implements CollectionFacade {
     @Resource
     private CollectionService collectionService;
     @Resource
-    private CollectionDtoToCollectionModelConverter collectionDtoToCollectionModelConverter;
+    private Converter<CollectionDto, CollectionModel> collectionDtoToCollectionModelConverter;
     @Resource
-    private CollectionModelToCollectionDtoConverter collectionModelToCollectionDtoConverter;
-    @Resource
-    private CardModelToCardDtoConverter cardModelToCardDtoConverter;
+    private Converter<CollectionModel, CollectionDto> collectionModelToCollectionDtoConverter;
 
     @Override
     public List<CollectionDto> findAll() {
@@ -53,13 +48,5 @@ public class DefaultCollectionFacade implements CollectionFacade {
     @Override
     public void deleteById(Long id) {
         collectionService.deleteById(id);
-    }
-
-    @Override
-    public Set<CardDto> findCardsByCollectionId(Long collectionId) {
-        return collectionService.findCardsByCollectionId(collectionId)
-                                .stream()
-                                .map(cardModelToCardDtoConverter::convert)
-                                .collect(Collectors.toSet());
     }
 }

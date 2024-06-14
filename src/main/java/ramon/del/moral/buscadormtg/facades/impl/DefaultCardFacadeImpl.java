@@ -1,15 +1,12 @@
 package ramon.del.moral.buscadormtg.facades.impl;
 
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ramon.del.moral.buscadormtg.converters.CardDtoToCardModelConverter;
-import ramon.del.moral.buscadormtg.converters.CardModelToCardDtoConverter;
-import ramon.del.moral.buscadormtg.converters.CardStringToCardDtoConverter;
-import ramon.del.moral.buscadormtg.converters.CollectionDtoToCollectionModelConverter;
 import ramon.del.moral.buscadormtg.dtos.CardDto;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.entities.CardModel;
+import ramon.del.moral.buscadormtg.entities.CollectionModel;
 import ramon.del.moral.buscadormtg.facades.CardFacade;
 import ramon.del.moral.buscadormtg.services.CardService;
 import ramon.del.moral.buscadormtg.services.ScryfallService;
@@ -28,13 +25,13 @@ public class DefaultCardFacadeImpl implements CardFacade {
     @Resource
     private ScryfallService scryfallService;
     @Resource
-    private CardModelToCardDtoConverter cardModelToCardDtoConverter;
+    private Converter<CardModel, CardDto> cardModelToCardDtoConverter;
     @Resource
-    private CardDtoToCardModelConverter cardDtoToCardModelConverter;
+    private Converter<CardDto, CardModel> cardDtoToCardModelConverter;
     @Resource
-    private CardStringToCardDtoConverter cardStringToCardDtoConverter;
-    @Autowired
-    private CollectionDtoToCollectionModelConverter collectionDtoToCollectionModelConverter;
+    private Converter<String, List<CardDto>> cardStringToCardDtoConverter;
+    @Resource
+    private Converter<CollectionDto, CollectionModel> collectionDtoToCollectionModelConverter;
 
     @Override
     public List<CardDto> findAll() {

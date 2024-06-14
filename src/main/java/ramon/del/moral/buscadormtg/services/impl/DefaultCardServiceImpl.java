@@ -34,4 +34,11 @@ public class DefaultCardServiceImpl implements CardService {
     public void deleteById(Long id) {
         cardDao.deleteById(id);
     }
+
+    @Override
+    public List<CardModel> findCardsByCollectionId(Long id) {
+        return cardDao.findCardsByCollectionId(id);
+    }
+
+
 }

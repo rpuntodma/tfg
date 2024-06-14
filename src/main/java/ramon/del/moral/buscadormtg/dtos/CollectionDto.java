@@ -18,4 +18,9 @@ public class CollectionDto {
     private Set<CardDto> cards;
     @NonNull
     private UserDto user;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

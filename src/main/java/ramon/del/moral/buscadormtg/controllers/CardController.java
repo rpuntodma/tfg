@@ -62,7 +62,7 @@ public class CardController {
             protected void updateItem(CollectionDto item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
-                    setGraphic(null);
+                    setText("");
                 } else {
                     setText(item.getName());
                 }
@@ -74,7 +74,7 @@ public class CardController {
             protected void updateItem(CollectionDto item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
-                    setGraphic(null);
+                    setText("");
                 } else {
                     setText(item.getName());
                 }
@@ -109,8 +109,6 @@ public class CardController {
                 }
             }
         });
-        collectionCards.getItems()
-                       .addAll(collectionFacade.findCardsByCollectionId(collectionDto != null ? collectionDto.getId() : 1L));
     }
 
     @FXML

@@ -15,7 +15,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="900.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="USUARIO" />
+            <Label fx:id="userLabel" text="USUARIO" />
             <Button mnemonicParsing="false" text="B" />
             <Button mnemonicParsing="false" text="B" />
             <Button mnemonicParsing="false" text="B" />
