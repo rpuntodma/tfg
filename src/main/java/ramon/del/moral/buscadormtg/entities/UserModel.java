@@ -1,5 +1,6 @@
 package ramon.del.moral.buscadormtg.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +32,6 @@ public class UserModel {
     private String name;
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CollectionModel> userCollections = new ArrayList<>();
 }

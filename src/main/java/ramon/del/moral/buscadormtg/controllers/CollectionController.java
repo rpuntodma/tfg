@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -16,16 +18,19 @@ import ramon.del.moral.buscadormtg.SpringFxmlLoader;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.dtos.UserDto;
 import ramon.del.moral.buscadormtg.facades.CollectionFacade;
+import ramon.del.moral.buscadormtg.facades.UserFacade;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Component
 public class CollectionController {
 
     @Resource
     private SpringFxmlLoader springFxmlLoader;
-
+    @Resource
+    private UserFacade userFacade;
     @Resource
     private CollectionFacade collectionFacade;
 
@@ -37,48 +42,100 @@ public class CollectionController {
     private TextField nameTextField;
     @FXML
     private Label userLabel;
+    @FXML
+    private Label errorMessage;
+
+    @FXML
+    private void logOut(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/user-login-view.fxml");
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
+                                                              .getWindow();
+        stage.setTitle("Log In");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void deleteAccount(ActionEvent actionEvent) throws IOException {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText("Choose your option.");
+
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
+
+        alert.getButtonTypes()
+             .setAll(buttonTypeYes, buttonTypeCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == buttonTypeYes) {
+            userFacade.deleteById(user.getId());
+            logOut(actionEvent);
+        }
+        else {
+            errorMessage.setText("Delete account cancelled");
+        }
+    }
 
     @FXML
     private void createCollection() {
 
         if (nameTextField.getText()
                          .isEmpty()) {
-            System.out.println("Cannot create a collection without a name");
+            errorMessage.setText("Collection name cannot be empty");
 
         } else {
             CollectionDto collectionDtoNew;
             collectionDtoNew = collectionFacade.findAll()
                                                .stream()
                                                .filter(collectionDto -> collectionDto.getUser()
-                                                                                                   .getId()
-                                                                                                   .equals(user.getId()))
+                                                                                     .getId()
+                                                                                     .equals(user.getId()))
                                                .filter(collectionDto -> collectionDto.getName()
-                                                                                                   .compareToIgnoreCase(nameTextField.getText()) == 0)
+                                                                                     .compareToIgnoreCase(nameTextField.getText()) == 0)
                                                .findAny()
                                                .orElse(CollectionDto.builder()
-                                                                                  .name(nameTextField.getText())
-                                                                                  .cards(new HashSet<>())
-                                                                                  .user(user)
-                                                                                  .build());
-
-            collectionDtoNew = collectionFacade.save(collectionDtoNew);
-            collectionsList.getItems().add(collectionDtoNew);
+                                                                    .name(nameTextField.getText())
+                                                                    .cards(new HashSet<>())
+                                                                    .user(user)
+                                                                    .build());
+            if (collectionDtoNew.getId() == null) {
+                collectionDtoNew = collectionFacade.save(collectionDtoNew);
+                collectionsList.getItems()
+                               .add(collectionDtoNew);
+            } else {
+                errorMessage.setText("Collection name already exists");
+            }
         }
-
     }
 
     @FXML
     private void deleteSelected() {
-        CollectionDto selectedCollection = collectionsList.getSelectionModel().getSelectedItem();
-        collectionsList.getItems().remove(selectedCollection);
-        collectionFacade.deleteById(selectedCollection.getId());
+        try {
+            CollectionDto selectedCollection = collectionsList.getSelectionModel()
+                                                              .getSelectedItem();
+            collectionsList.getItems()
+                           .remove(selectedCollection);
+            collectionFacade.deleteById(selectedCollection.getId());
+        } catch (NullPointerException e) {
+            errorMessage.setText("Nothing selected to delete");
+        }
     }
 
     @FXML
     private void editSelected(ActionEvent actionEvent) throws IOException {
-        CollectionDto selectedCollection = collectionsList.getSelectionModel().getSelectedItem();
+        try {
+            CollectionDto selectedCollection = collectionsList.getSelectionModel()
+                                                              .getSelectedItem();
 
-        goToCards(actionEvent, selectedCollection);
+            goToCards(actionEvent, selectedCollection);
+        } catch (NullPointerException e) {
+            errorMessage.setText("Nothing selected");
+        }
     }
 
     public void receiveUser(UserDto newUser) {
