@@ -11,9 +11,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ramon.del.moral.buscadormtg.ProjectJavaFxApp;
 import ramon.del.moral.buscadormtg.SpringFxmlLoader;
 import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.dtos.UserDto;
@@ -25,7 +23,7 @@ import java.util.HashSet;
 @Component
 public class CollectionController {
 
-    @Autowired
+    @Resource
     private SpringFxmlLoader springFxmlLoader;
 
     @Resource
@@ -40,47 +38,47 @@ public class CollectionController {
     @FXML
     private Label userLabel;
 
-//    @FXML
-//    private void initialize() {
-////        collectionsList.setCellFactory(collectionDtoListView -> new ListCell<>() {
-////            @Override
-////            protected void updateItem(CollectionDto collection, boolean empty) {
-////                super.updateItem(collection, empty);
-////                if (empty || collection == null) {
-////                    setText(null);
-////                } else {
-////                    setText(collection.getName());
-////                }
-////            }
-////        });
-////        collectionsList.getItems().addAll(collectionFacade.findAll());
-//    }
-
     @FXML
-    private void createCollection(ActionEvent actionEvent) throws IOException {
-        if (nameTextField.getText().isEmpty()) {
-            System.out.println("vacio");
+    private void createCollection() {
+
+        if (nameTextField.getText()
+                         .isEmpty()) {
+            System.out.println("Cannot create a collection without a name");
+
         } else {
-            CollectionDto collectionDtoNew = CollectionDto.builder()
-                                                          .name(nameTextField.getText())
-                                                          .cards(new HashSet<>())
-                                                          .user(user)
-                                                          .build();
+            CollectionDto collectionDtoNew;
+            collectionDtoNew = collectionFacade.findAll()
+                                               .stream()
+                                               .filter(collectionDto -> collectionDto.getUser()
+                                                                                                   .getId()
+                                                                                                   .equals(user.getId()))
+                                               .filter(collectionDto -> collectionDto.getName()
+                                                                                                   .compareToIgnoreCase(nameTextField.getText()) == 0)
+                                               .findAny()
+                                               .orElse(CollectionDto.builder()
+                                                                                  .name(nameTextField.getText())
+                                                                                  .cards(new HashSet<>())
+                                                                                  .user(user)
+                                                                                  .build());
+
             collectionDtoNew = collectionFacade.save(collectionDtoNew);
-
-            FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/cards-view.fxml");
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
-                                                                  .getWindow();
-
-            CardController cardController = fxmlLoader.getController();
-            cardController.setSelectedCollection(collectionDtoNew);
-
-            stage.setTitle("Collecciones!");
-            stage.setScene(scene);
-            stage.show();
+            collectionsList.getItems().add(collectionDtoNew);
         }
 
+    }
+
+    @FXML
+    private void deleteSelected() {
+        CollectionDto selectedCollection = collectionsList.getSelectionModel().getSelectedItem();
+        collectionsList.getItems().remove(selectedCollection);
+        collectionFacade.deleteById(selectedCollection.getId());
+    }
+
+    @FXML
+    private void editSelected(ActionEvent actionEvent) throws IOException {
+        CollectionDto selectedCollection = collectionsList.getSelectionModel().getSelectedItem();
+
+        goToCards(actionEvent, selectedCollection);
     }
 
     public void receiveUser(UserDto newUser) {
@@ -98,22 +96,25 @@ public class CollectionController {
                 }
             }
         });
-//        collectionsList.getItems().addAll(collectionFacade.findAll());
+        collectionsList.getItems()
+                       .addAll(collectionFacade.findAll()
+                                               .stream()
+                                               .filter(coll -> coll.getUser()
+                                                                   .getId()
+                                                                   .equals(user.getId()))
+                                               .toList());
     }
 
-//    @FXML
-//    private void onEdit(ActionEvent actionEvent) {
-//        CollectionDto collectionDto = (Button)actionEvent.getSource().
-//        if (searchText != null) {
-//            FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource("fxml/collections-view.fxml"));
-//            Scene scene = new Scene(fxmlLoader.load());
-//            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
-//                                                                  .getWindow();
-//            CollectionController collcon = fxmlLoader.getController();
-//            collcon.setWellcome(searchText);
-//            stage.setTitle("Collecciones!");
-//            stage.setScene(scene);
-//            stage.show();
-//        }
-//    }
+    private void goToCards(ActionEvent actionEvent, CollectionDto collectionDto) throws IOException {
+        FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/cards-view.fxml");
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
+                                                              .getWindow();
+        CardController cardController = fxmlLoader.getController();
+
+        cardController.receiveCollection(collectionDto);
+        stage.setTitle("Edit Collection");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

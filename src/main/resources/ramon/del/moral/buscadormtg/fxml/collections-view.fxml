@@ -55,11 +55,16 @@
                   <Insets left="200.0" right="200.0" />
                </padding>
             </HBox>
-            <Label text="My collections">
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
                <VBox.margin>
-                  <Insets left="50.0" right="250.0" />
+                  <Insets left="300.0" right="300.0" />
                </VBox.margin>
-            </Label>
+               <children>
+                  <Label text="My collections" />
+                  <Button mnemonicParsing="false" onAction="#editSelected" text="Edit Selected" />
+                  <Button mnemonicParsing="false" onAction="#deleteSelected" text="Delete Selected" />
+               </children>
+            </HBox>
             <ListView fx:id="collectionsList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="300.0" right="300.0" />

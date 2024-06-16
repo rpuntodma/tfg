@@ -31,7 +31,7 @@ public class CardController {
     private CardFacade cardFacade;
 
     @FXML
-    private ComboBox<CollectionDto> collections;
+    private ComboBox<CollectionDto> collectionsComboBox;
     @FXML
     private ListView<CardDto> collectionCards;
 
@@ -53,63 +53,6 @@ public class CardController {
 
     private List<CardDto> cards = new ArrayList<>();
     private CollectionDto collectionDto;
-
-    @FXML
-    private void initialize() {
-
-        collections.setCellFactory(collectionDtoListView -> new ListCell<>() {
-            @Override
-            protected void updateItem(CollectionDto item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText("");
-                } else {
-                    setText(item.getName());
-                }
-            }
-        });
-
-        collections.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(CollectionDto item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText("");
-                } else {
-                    setText(item.getName());
-                }
-            }
-        });
-
-        collections.getItems()
-                   .addAll(collectionFacade.findAll());
-        if (!collections.getItems()
-                        .isEmpty()) {
-            collections.getSelectionModel()
-                       .select(0);
-        }
-
-        collectionDto = collections.getItems()
-                                   .isEmpty() ?
-                CollectionDto.builder()
-                             .name("New Collection")
-                             .cards(new HashSet<>())
-                             .build()
-                : collections.getSelectionModel()
-                             .getSelectedItem();
-
-        collectionCards.setCellFactory(cardDtoListView -> new ListCell<>() {
-            @Override
-            protected void updateItem(CardDto item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setGraphic(null);
-                } else {
-                    setText(item.getName());
-                }
-            }
-        });
-    }
 
     @FXML
     private void searchCards(ActionEvent actionEvent) {
@@ -176,8 +119,56 @@ public class CardController {
         }
     }
 
-    public void setSelectedCollection(CollectionDto collectionDto) {
+    public void receiveCollection(CollectionDto collectionDto) {
         this.collectionDto = collectionDto;
-        this.collections.setValue(collectionDto);
+
+        collectionsComboBox.setCellFactory(collectionDtoListView -> new ListCell<>() {
+            @Override
+            protected void updateItem(CollectionDto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("");
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+
+        collectionsComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(CollectionDto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("");
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+
+        collectionsComboBox.getItems()
+                           .addAll(collectionFacade.findAll()
+                                                   .stream()
+                                                   .filter(coll -> coll.getUser()
+                                                                       .getId()
+                                                                       .equals(collectionDto.getUser()
+                                                                                            .getId()))
+                                                   .toList());
+
+        collectionsComboBox.setValue(collectionDto);
+
+        collectionCards.setCellFactory(cardDtoListView -> new ListCell<>() {
+            @Override
+            protected void updateItem(CardDto item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setText(item.getName());
+                }
+            }
+        });
+
+        collectionCards.getItems().addAll(cardFacade.findAllByCollection(collectionDto.getId()));
     }
 }

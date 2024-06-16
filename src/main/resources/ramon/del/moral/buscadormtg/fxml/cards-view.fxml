@@ -40,7 +40,7 @@
             <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label text="My Collections" />
-                  <ComboBox fx:id="collections" maxWidth="1.7976931348623157E308" minWidth="-Infinity" promptText="Collection" />
+                  <ComboBox fx:id="collectionsComboBox" maxWidth="1.7976931348623157E308" minWidth="-Infinity" promptText="Collection" />
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
                         <ListView fx:id="collectionCards" minWidth="-Infinity" prefHeight="200.0" prefWidth="212.0" HBox.hgrow="ALWAYS" />

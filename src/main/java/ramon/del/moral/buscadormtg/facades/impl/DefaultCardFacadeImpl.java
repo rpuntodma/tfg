@@ -9,12 +9,14 @@ import ramon.del.moral.buscadormtg.entities.CardModel;
 import ramon.del.moral.buscadormtg.entities.CollectionModel;
 import ramon.del.moral.buscadormtg.facades.CardFacade;
 import ramon.del.moral.buscadormtg.services.CardService;
+import ramon.del.moral.buscadormtg.services.CollectionService;
 import ramon.del.moral.buscadormtg.services.ScryfallService;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,6 +26,8 @@ public class DefaultCardFacadeImpl implements CardFacade {
     private CardService cardService;
     @Resource
     private ScryfallService scryfallService;
+    @Resource
+    private CollectionService collectionService;
     @Resource
     private Converter<CardModel, CardDto> cardModelToCardDtoConverter;
     @Resource
@@ -67,5 +71,13 @@ public class DefaultCardFacadeImpl implements CardFacade {
         return cardStringToCardDtoConverter
                 .convert(scryfallService
                         .searchCards(name.replaceAll(" +", "%20")));
+    }
+
+    @Override
+    public Set<CardDto> findAllByCollection(Long collectionId) {
+        return collectionService.findCardsByCollectionId(collectionId)
+                                .stream()
+                                .map(cardModelToCardDtoConverter::convert)
+                                .collect(Collectors.toSet());
     }
 }
