@@ -7,7 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 import ramon.del.moral.buscadormtg.SpringFxmlLoader;
@@ -29,21 +33,40 @@ public class UserController {
     @FXML
     private TextField userNameSignUp;
     @FXML
-    private TextField passwordSignUp;
+    private PasswordField passwordSignUp;
     @FXML
     private Label errorSignUpLabel;
+    @FXML
+    private ImageView eyeSignUpImage;
+    private TextField visiblePasswordSignUp;
 
     @FXML
     private TextField userNameSignIn;
     @FXML
-    private TextField passwordSignIn;
+    private PasswordField passwordSignIn;
     @FXML
     private Label errorSignInLabel;
+    @FXML
+    private ImageView eyeSignInImage;
+    private TextField visiblePasswordSignIn;
+
+    @FXML
+    public void initialize() {
+        visiblePasswordSignIn = new TextField();
+        initPasswordFields(passwordSignIn, visiblePasswordSignIn, eyeSignInImage);
+
+        visiblePasswordSignUp = new TextField();
+        initPasswordFields(passwordSignUp, visiblePasswordSignUp, eyeSignUpImage);
+    }
 
     @FXML
     private void pressSignUp(ActionEvent actionEvent) throws IOException {
         if (userExists(userNameSignUp.getText())) {
             errorSignUpLabel.setText("User name already exists");
+
+        } else if (userNameSignUp.getText().isBlank()) {
+            errorSignUpLabel.setText("Username cannot be blank");
+
 
         } else if (passwordSignUp.getText().isBlank()) {
             errorSignUpLabel.setText("Password cannot be blank");
@@ -99,5 +122,31 @@ public class UserController {
         return userFacade.findAll()
                          .stream()
                          .anyMatch(user -> userName.compareToIgnoreCase(user.getName()) == 0);
+    }
+
+    private void initPasswordFields(PasswordField passwordField, TextField visiblePasswordField, ImageView eyeIcon) {
+
+        visiblePasswordField.setManaged(false);
+        visiblePasswordField.setVisible(false);
+        HBox.setHgrow(visiblePasswordField, Priority.ALWAYS);
+
+        eyeIcon.setOnMouseEntered(event -> {
+            visiblePasswordField.setText(passwordField.getText());
+            visiblePasswordField.setManaged(true);
+            visiblePasswordField.setVisible(true);
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+        });
+
+        eyeIcon.setOnMouseExited(event -> {
+            passwordField.setText(visiblePasswordField.getText());
+            visiblePasswordField.setManaged(false);
+            visiblePasswordField.setVisible(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+        });
+
+        HBox hBox = (HBox) passwordField.getParent();
+        hBox.getChildren().add(visiblePasswordField);
     }
 }
