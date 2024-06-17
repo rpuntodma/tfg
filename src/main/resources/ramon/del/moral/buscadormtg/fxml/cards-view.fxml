@@ -20,7 +20,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="900.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Wellcome User" />
+            <Label fx:id="wellcomeLabel" text="Wellcome User" />
             <Button mnemonicParsing="false" onAction="#goToCollections" text="Manage Collections" />
             <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" />
          </children>

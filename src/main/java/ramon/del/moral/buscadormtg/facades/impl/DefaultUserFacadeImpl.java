@@ -3,8 +3,6 @@ package ramon.del.moral.buscadormtg.facades.impl;
 import jakarta.annotation.Resource;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ramon.del.moral.buscadormtg.converters.UserModelToUserDtoConverter;
-import ramon.del.moral.buscadormtg.dtos.CollectionDto;
 import ramon.del.moral.buscadormtg.dtos.UserDto;
 import ramon.del.moral.buscadormtg.entities.UserModel;
 import ramon.del.moral.buscadormtg.facades.UserFacade;

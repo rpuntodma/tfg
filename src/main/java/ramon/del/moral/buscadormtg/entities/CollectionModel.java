@@ -40,11 +40,7 @@ public class CollectionModel {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Cascade(value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    @JoinTable(
-            name = "collection_card",
-            joinColumns = @JoinColumn(name = "collection_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_id")
-    )
+    @JoinTable(name = "collection_card", joinColumns = @JoinColumn(name = "collection_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
     private Set<CardModel> cards = new HashSet<>();
 
     @ManyToOne

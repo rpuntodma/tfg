@@ -54,5 +54,4 @@ public class DefaultCollectionServiceImpl implements CollectionService {
                                                                                      .getId(), userId))
                             .collect(Collectors.toList());
     }
-
 }

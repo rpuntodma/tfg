@@ -45,6 +45,30 @@ public class CollectionController {
     @FXML
     private Label errorMessage;
 
+    public void receiveUser(UserDto newUser) {
+        user = newUser;
+        userLabel.setText("Wellcome " + user.getName());
+
+        collectionsList.setCellFactory(collectionDtoListView -> new ListCell<>() {
+            @Override
+            protected void updateItem(CollectionDto collection, boolean empty) {
+                super.updateItem(collection, empty);
+                if (empty || collection == null) {
+                    setText(null);
+                } else {
+                    setText(collection.getName());
+                }
+            }
+        });
+        collectionsList.getItems()
+                       .addAll(collectionFacade.findAll()
+                                               .stream()
+                                               .filter(coll -> coll.getUser()
+                                                                   .getId()
+                                                                   .equals(user.getId()))
+                                               .toList());
+    }
+
     @FXML
     private void logOut(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/user-login-view.fxml");
@@ -73,8 +97,7 @@ public class CollectionController {
         if (result.isPresent() && result.get() == buttonTypeYes) {
             userFacade.deleteById(user.getId());
             logOut(actionEvent);
-        }
-        else {
+        } else {
             errorMessage.setText("Delete account cancelled");
         }
     }
@@ -134,30 +157,6 @@ public class CollectionController {
         } catch (NullPointerException e) {
             errorMessage.setText("Nothing selected to edit");
         }
-    }
-
-    public void receiveUser(UserDto newUser) {
-        user = newUser;
-        userLabel.setText("Wellcome " + user.getName());
-
-        collectionsList.setCellFactory(collectionDtoListView -> new ListCell<>() {
-            @Override
-            protected void updateItem(CollectionDto collection, boolean empty) {
-                super.updateItem(collection, empty);
-                if (empty || collection == null) {
-                    setText(null);
-                } else {
-                    setText(collection.getName());
-                }
-            }
-        });
-        collectionsList.getItems()
-                       .addAll(collectionFacade.findAll()
-                                               .stream()
-                                               .filter(coll -> coll.getUser()
-                                                                   .getId()
-                                                                   .equals(user.getId()))
-                                               .toList());
     }
 
     private void goToCards(ActionEvent actionEvent, CollectionDto collectionDto) throws IOException {

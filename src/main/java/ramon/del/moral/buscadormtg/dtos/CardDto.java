@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@EqualsAndHashCode(of = { "name", "types", "manaCost" })
+@EqualsAndHashCode(of = {"name", "types", "manaCost"})
 @Builder
 @AllArgsConstructor
 public class CardDto {

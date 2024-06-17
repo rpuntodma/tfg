@@ -1,7 +1,6 @@
 package ramon.del.moral.buscadormtg;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,7 +19,7 @@ public class SpringFxmlLoader {
         this.context = context;
     }
 
-    public FXMLLoader load(String fxmlPath) throws IOException {
+    public FXMLLoader load(String fxmlPath) {
         FXMLLoader fxmlLoader = new FXMLLoader(ProjectJavaFxApp.class.getResource(fxmlPath));
         fxmlLoader.setControllerFactory(context::getBean);
         return fxmlLoader;

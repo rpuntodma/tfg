@@ -39,6 +39,4 @@ public class DefaultCardServiceImpl implements CardService {
     public List<CardModel> findCardsByCollectionId(Long id) {
         return cardDao.findCardsByCollectionId(id);
     }
-
-
 }

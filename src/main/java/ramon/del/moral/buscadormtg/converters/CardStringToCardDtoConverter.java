@@ -3,7 +3,6 @@ package ramon.del.moral.buscadormtg.converters;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -22,7 +21,7 @@ public class CardStringToCardDtoConverter implements Converter<String, List<Card
     /**
      * This is used to manage the pagination, and do multiple calls to the API
      */
-    @Autowired
+    @Resource
     private RestTemplate restTemplate;
 
     @Override
@@ -59,11 +58,17 @@ public class CardStringToCardDtoConverter implements Converter<String, List<Card
         if (dataNode.isArray()) {
             for (JsonNode node : dataNode) {
                 CardDto card = CardDto.builder()
-                                      .name(node.path("name").asText())
-                                      .types(node.path("type_line").asText())
-                                      .manaCost(node.path("mana_cost").asText())
-                                      .oracle(node.path("oracle_text").asText())
-                                      .imageUrl(node.path("image_uris").path("normal").asText())
+                                      .name(node.path("name")
+                                                .asText())
+                                      .types(node.path("type_line")
+                                                 .asText())
+                                      .manaCost(node.path("mana_cost")
+                                                    .asText())
+                                      .oracle(node.path("oracle_text")
+                                                  .asText())
+                                      .imageUrl(node.path("image_uris")
+                                                    .path("normal")
+                                                    .asText())
                                       .build();
                 cardList.add(card);
             }

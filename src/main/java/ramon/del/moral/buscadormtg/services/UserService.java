@@ -1,6 +1,5 @@
 package ramon.del.moral.buscadormtg.services;
 
-import ramon.del.moral.buscadormtg.entities.CollectionModel;
 import ramon.del.moral.buscadormtg.entities.UserModel;
 
 import java.util.List;

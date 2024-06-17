@@ -13,7 +13,7 @@ public class CardDtoToCardModelConverter implements Converter<CardDto, CardModel
 
     @Override
     public CardModel convert(CardDto cardDto) {
-        Assert.notNull(cardDto, "Source CardDto  must not be null");
+        Assert.notNull(cardDto, "Source CardDto must not be null");
 
         return CardModel.builder()
                         .id(cardDto.getId())

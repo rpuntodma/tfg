@@ -3,9 +3,7 @@ package ramon.del.moral.buscadormtg.controllers;
 import jakarta.annotation.Resource;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -38,7 +36,6 @@ public class UserController {
     private Label errorSignUpLabel;
     @FXML
     private ImageView eyeSignUpImage;
-    private TextField visiblePasswordSignUp;
 
     @FXML
     private TextField userNameSignIn;
@@ -48,14 +45,13 @@ public class UserController {
     private Label errorSignInLabel;
     @FXML
     private ImageView eyeSignInImage;
-    private TextField visiblePasswordSignIn;
 
     @FXML
     public void initialize() {
-        visiblePasswordSignIn = new TextField();
+        TextField visiblePasswordSignIn = new TextField();
         initPasswordFields(passwordSignIn, visiblePasswordSignIn, eyeSignInImage);
 
-        visiblePasswordSignUp = new TextField();
+        TextField visiblePasswordSignUp = new TextField();
         initPasswordFields(passwordSignUp, visiblePasswordSignUp, eyeSignUpImage);
     }
 

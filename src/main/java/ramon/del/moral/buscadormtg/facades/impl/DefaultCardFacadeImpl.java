@@ -68,9 +68,7 @@ public class DefaultCardFacadeImpl implements CardFacade {
 
     @Override
     public List<CardDto> searchCardsByName(String name) throws IOException, InterruptedException {
-        return cardStringToCardDtoConverter
-                .convert(scryfallService
-                        .searchCards(name.replaceAll(" +", "%20")));
+        return cardStringToCardDtoConverter.convert(scryfallService.searchCards(name.replaceAll(" +", "%20")));
     }
 
     @Override

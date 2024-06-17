@@ -34,6 +34,9 @@ public class CardController {
     private CardFacade cardFacade;
 
     @FXML
+    private Label wellcomeLabel;
+
+    @FXML
     private ComboBox<CollectionDto> collectionsComboBox;
     @FXML
     private ListView<CardDto> collectionCards;
@@ -61,6 +64,8 @@ public class CardController {
 
     public void receiveCollection(CollectionDto collectionDto) {
         this.collectionDto = collectionDto;
+        wellcomeLabel.setText("Wellcome " + collectionDto.getUser()
+                                                         .getName());
 
         collectionsComboBox.getItems()
                            .addAll(collectionFacade.findAll()
@@ -108,7 +113,8 @@ public class CardController {
                        .addListener((observable, oldValue, newValue) -> {
                            if (newValue != null) {
                                selectCard(newValue);
-                               searchResult.getSelectionModel().clearSelection();
+                               searchResult.getSelectionModel()
+                                           .clearSelection();
                            }
                        });
 
@@ -117,7 +123,8 @@ public class CardController {
                     .addListener((observable, oldValue, newValue) -> {
                         if (newValue != null) {
                             selectCard(newValue);
-                            collectionCards.getSelectionModel().clearSelection();
+                            collectionCards.getSelectionModel()
+                                           .clearSelection();
                         }
                     });
     }
@@ -166,7 +173,7 @@ public class CardController {
                                .addAll(collectionDto.getCards());
             }
         } catch (NoSuchElementException e) {
-            System.out.println("Nothing selected to delete");
+            errorMessage.setText("Nothing selected to delete");
         }
     }
 
@@ -183,7 +190,7 @@ public class CardController {
                                                                      .isEmpty())
                                           .toList());
         } catch (IOException | InterruptedException e) {
-            System.out.println("Nada encontrado.");
+            errorMessage.setText("Nothing found");
         }
     }
 
