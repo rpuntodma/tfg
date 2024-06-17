@@ -17,4 +17,9 @@ public class CardDto {
     private String manaCost;
     private String oracle;
     private String imageUrl;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -48,21 +48,19 @@ public class CollectionController {
     @FXML
     private void logOut(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/user-login-view.fxml");
-        Scene scene = new Scene(fxmlLoader.load());
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
                                                               .getWindow();
-        stage.setTitle("Log In");
-        stage.setScene(scene);
-        stage.show();
+        SpringFxmlLoader.logOut(fxmlLoader, stage);
     }
 
     @FXML
     private void deleteAccount(ActionEvent actionEvent) throws IOException {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Are you sure?");
-        alert.setContentText("Choose your option.");
+        alert.setTitle("Delete user confirmation");
+        alert.setHeaderText("Are you sure you want to delete your account?");
+        alert.setContentText("By clicking yes, you will remove your account and all your collections.");
 
         ButtonType buttonTypeYes = new ButtonType("Yes");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
@@ -134,13 +132,13 @@ public class CollectionController {
 
             goToCards(actionEvent, selectedCollection);
         } catch (NullPointerException e) {
-            errorMessage.setText("Nothing selected");
+            errorMessage.setText("Nothing selected to edit");
         }
     }
 
     public void receiveUser(UserDto newUser) {
         user = newUser;
-        userLabel.setText("Bienvenido " + user.getName());
+        userLabel.setText("Wellcome " + user.getName());
 
         collectionsList.setCellFactory(collectionDtoListView -> new ListCell<>() {
             @Override

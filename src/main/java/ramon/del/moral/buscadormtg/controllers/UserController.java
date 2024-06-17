@@ -64,11 +64,13 @@ public class UserController {
         if (userExists(userNameSignUp.getText())) {
             errorSignUpLabel.setText("User name already exists");
 
-        } else if (userNameSignUp.getText().isBlank()) {
+        } else if (userNameSignUp.getText()
+                                 .isBlank()) {
             errorSignUpLabel.setText("Username cannot be blank");
 
 
-        } else if (passwordSignUp.getText().isBlank()) {
+        } else if (passwordSignUp.getText()
+                                 .isBlank()) {
             errorSignUpLabel.setText("Password cannot be blank");
 
         } else {
@@ -106,16 +108,10 @@ public class UserController {
     }
 
     private void goToCollections(ActionEvent actionEvent, UserDto userDto) throws IOException {
-        FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/collections-view.fxml");
-        Scene scene = new Scene(fxmlLoader.load());
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
                                                               .getWindow();
-        CollectionController collectionController = fxmlLoader.getController();
-
-        collectionController.receiveUser(userDto);
-        stage.setTitle("Collecciones!");
-        stage.setScene(scene);
-        stage.show();
+        SpringFxmlLoader.goToCollections(springFxmlLoader.load("fxml/collections-view.fxml"), stage, userDto);
     }
 
     private boolean userExists(String userName) {
@@ -147,6 +143,7 @@ public class UserController {
         });
 
         HBox hBox = (HBox) passwordField.getParent();
-        hBox.getChildren().add(visiblePasswordField);
+        hBox.getChildren()
+            .add(visiblePasswordField);
     }
 }
