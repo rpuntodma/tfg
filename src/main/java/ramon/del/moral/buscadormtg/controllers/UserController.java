@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import ramon.del.moral.buscadormtg.SpringFxmlLoader;
 import ramon.del.moral.buscadormtg.dtos.UserDto;
@@ -72,7 +73,7 @@ public class UserController {
         } else {
             UserDto newUser = userFacade.save(UserDto.builder()
                                                      .name(userNameSignUp.getText())
-                                                     .password(passwordSignUp.getText())
+                                                     .password(BCrypt.hashpw(passwordSignUp.getText(), BCrypt.gensalt()))
                                                      .build());
 
             goToCollections(actionEvent, newUser);
@@ -89,8 +90,7 @@ public class UserController {
                                                                       .compareToIgnoreCase(user.getName()) == 0)
                                         .findAny()
                                         .orElseThrow();
-            if (userDto.getPassword()
-                       .compareToIgnoreCase(passwordSignIn.getText()) != 0) {
+            if (!BCrypt.checkpw(passwordSignIn.getText(), userDto.getPassword())) {
                 throw new InvalidKeyException();
             }
 

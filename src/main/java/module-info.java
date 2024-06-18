@@ -19,6 +19,7 @@ module ramon.del.moral.buscadormtg {
     requires spring.web;
     requires spring.data.commons;
     requires ch.qos.logback.core;
+    requires jBCrypt;
 
     opens ramon.del.moral.buscadormtg to spring.core, spring.beans, spring.context, javafx.fxml, org.json;
     opens ramon.del.moral.buscadormtg.controllers to javafx.fxml, org.json, spring.beans, spring.context, spring.core;
