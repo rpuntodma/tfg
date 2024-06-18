@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,11 +17,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ramon.del.moral.buscadormtg.controllers.CardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ramon.del.moral.buscadormtg.controllers.CardController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="900.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="wellcomeLabel" text="Wellcome User" />
+            <Label fx:id="wellcomeLabel" styleClass="wellcome-label" text="Wellcome User" />
             <Button mnemonicParsing="false" onAction="#goToCollections" text="Manage Collections" />
             <Button mnemonicParsing="false" onAction="#logOut" text="Log Out" />
          </children>
@@ -37,14 +38,21 @@
          <children>
             <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="My Collections" />
+                  <Label styleClass="title-label" text="My Collections" />
                   <ComboBox fx:id="collectionsComboBox" maxWidth="1.7976931348623157E308" minWidth="-Infinity" onAction="#selectCollection" promptText="Collection" />
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
                         <ListView fx:id="collectionCards" minWidth="-Infinity" prefHeight="200.0" prefWidth="212.0" HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="70.0" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#deleteCardFromCollection" text="DEL" />
+                              <Button mnemonicParsing="false" onAction="#deleteCardFromCollection" styleClass="icon-button">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/delete.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                            <padding>
                               <Insets top="20.0" />
@@ -56,11 +64,18 @@
             </VBox>
             <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="300.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label text="ScryFall Search" />
-                  <HBox maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="287.0" spacing="5.0">
+                  <Label styleClass="title-label" text="ScryFall Search" />
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="287.0" spacing="5.0">
                      <children>
                         <TextField fx:id="searchBar" maxWidth="1.7976931348623157E308" onAction="#searchCards" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#searchCards" text="SE" />
+                        <Button mnemonicParsing="false" onAction="#searchCards" styleClass="icon-button">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/search.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -68,7 +83,14 @@
                         <ListView fx:id="searchResult" minWidth="-Infinity" prefHeight="200.0" prefWidth="212.0" HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER" prefHeight="438.0" prefWidth="68.0" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addCard" text="AD" />
+                              <Button mnemonicParsing="false" onAction="#addCard" styleClass="icon-button">
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                            <padding>
                               <Insets top="20.0" />
@@ -102,8 +124,8 @@
                      <children>
                         <Label text="Name" />
                         <Label text="Types" GridPane.rowIndex="1" />
-                        <Label text="Mana Cost" GridPane.rowIndex="2" />
-                        <Label text="Oracle Text" GridPane.rowIndex="3" GridPane.valignment="TOP">
+                        <Label text="Mana" GridPane.rowIndex="2" />
+                        <Label text="Oracle" GridPane.rowIndex="3" GridPane.valignment="TOP">
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin>
@@ -140,7 +162,7 @@
       <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="900.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="errorMessage" text="Error message" />
+            <Label fx:id="errorMessage" styleClass="error-label" text=" " />
          </children>
          <padding>
             <Insets left="60.0" />

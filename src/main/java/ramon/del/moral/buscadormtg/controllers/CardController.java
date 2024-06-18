@@ -147,6 +147,7 @@ public class CardController {
 
     @FXML
     private void selectCollection() {
+        errorMessage.setText("");
         collectionDto = collectionsComboBox.getSelectionModel()
                                            .getSelectedItem();
         collectionCards.getItems()
@@ -157,9 +158,9 @@ public class CardController {
 
     @FXML
     private void deleteCardFromCollection() {
+        errorMessage.setText("");
         CardDto selectedCard = collectionCards.getSelectionModel()
                                               .getSelectedItem();
-        System.out.println(selectedCard.getId());
         try {
             collectionDto.getCards()
                          .remove(selectedCard);
@@ -171,14 +172,17 @@ public class CardController {
                                .clear();
                 collectionCards.getItems()
                                .addAll(collectionDto.getCards());
+            } else {
+                errorMessage.setText("Nothing to delete");
             }
-        } catch (NoSuchElementException e) {
-            errorMessage.setText("Nothing selected to delete");
+        } catch (Exception e) {
+            errorMessage.setText("Nothing to delete");
         }
     }
 
     @FXML
     private void searchCards() {
+        errorMessage.setText("");
         searchResult.getItems()
                     .clear();
 
@@ -196,6 +200,7 @@ public class CardController {
 
     @FXML
     private void addCard() {
+        errorMessage.setText("");
         CardDto selectedCard = searchResult.getSelectionModel()
                                            .getSelectedItem();
         try {
@@ -214,12 +219,13 @@ public class CardController {
             } else {
                 errorMessage.setText("Nothing added to collection");
             }
-        } catch (NoSuchElementException e) {
-            errorMessage.setText("Nothing selected to add");
+        } catch (Exception e) {
+            errorMessage.setText("Nothing to add");
         }
     }
 
     private void selectCard(CardDto selectedCard) {
+        errorMessage.setText("");
         imageView.setImage(new Image(selectedCard.getImageUrl()));
         nameLabel.setText(selectedCard.getName());
         typesLabel.setText(selectedCard.getTypes());

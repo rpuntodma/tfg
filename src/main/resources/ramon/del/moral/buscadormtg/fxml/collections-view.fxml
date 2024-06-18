@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ramon.del.moral.buscadormtg.controllers.CollectionController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ramon.del.moral.buscadormtg.controllers.CollectionController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="900.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="userLabel" text="Wellcome User" />
+            <Label fx:id="userLabel" styleClass="wellcome-label" text="Wellcome User" />
             <Button mnemonicParsing="false" onAction="#logOut" text="Log out" />
             <Button mnemonicParsing="false" onAction="#deleteAccount" text="Delete Account" />
          </children>
@@ -31,7 +31,7 @@
       <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="900.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="errorMessage" text=" " />
+            <Label fx:id="errorMessage" styleClass="error-label" text=" " />
          </children>
          <padding>
             <Insets left="60.0" />
@@ -41,7 +41,7 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="My Collections" />
+            <Label styleClass="title-label" text="My Collections" />
             <Separator prefWidth="200.0" />
             <HBox alignment="CENTER" prefHeight="75.0" prefWidth="880.0" spacing="40.0">
                <children>

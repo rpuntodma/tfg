@@ -71,6 +71,8 @@ public class CollectionController {
 
     @FXML
     private void logOut(ActionEvent actionEvent) throws IOException {
+        errorMessage.setText("");
+
         FXMLLoader fxmlLoader = springFxmlLoader.load("fxml/user-login-view.fxml");
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene()
@@ -80,6 +82,7 @@ public class CollectionController {
 
     @FXML
     private void deleteAccount(ActionEvent actionEvent) throws IOException {
+        errorMessage.setText("");
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete user confirmation");
@@ -104,6 +107,7 @@ public class CollectionController {
 
     @FXML
     private void createCollection() {
+        errorMessage.setText("");
 
         if (nameTextField.getText()
                          .isEmpty()) {
@@ -136,6 +140,8 @@ public class CollectionController {
 
     @FXML
     private void deleteSelected() {
+        errorMessage.setText("");
+
         try {
             CollectionDto selectedCollection = collectionsList.getSelectionModel()
                                                               .getSelectedItem();
@@ -149,6 +155,8 @@ public class CollectionController {
 
     @FXML
     private void editSelected(ActionEvent actionEvent) throws IOException {
+        errorMessage.setText("");
+
         try {
             CollectionDto selectedCollection = collectionsList.getSelectionModel()
                                                               .getSelectedItem();

@@ -8,8 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,11 @@ public class UserController {
     SpringFxmlLoader springFxmlLoader;
     @Resource
     private UserFacade userFacade;
+
+    @FXML
+    private VBox signInVBox;
+    @FXML
+    private VBox signUpVBox;
 
     @FXML
     private TextField userNameSignUp;
@@ -54,6 +61,20 @@ public class UserController {
 
         TextField visiblePasswordSignUp = new TextField();
         initPasswordFields(passwordSignUp, visiblePasswordSignUp, eyeSignUpImage);
+    }
+
+    @FXML
+    public void signInVBoxEnter() {
+        signInVBox.setOpacity(1);
+        signUpVBox.setOpacity(0.1);
+        errorSignInLabel.setText("");
+    }
+
+    @FXML
+    public void signUpVBoxEnter() {
+        signUpVBox.setOpacity(1);
+        signInVBox.setOpacity(0.1);
+        errorSignUpLabel.setText("");
     }
 
     @FXML
