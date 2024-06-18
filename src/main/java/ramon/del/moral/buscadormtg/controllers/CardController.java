@@ -162,9 +162,10 @@ public class CardController {
         CardDto selectedCard = collectionCards.getSelectionModel()
                                               .getSelectedItem();
         try {
-            collectionDto.getCards()
-                         .remove(selectedCard);
-            collectionDto = collectionFacade.save(collectionDto);
+            if (selectedCard != null && collectionDto.getCards()
+                                                     .remove(selectedCard)) {
+                collectionDto = collectionFacade.save(collectionDto);
+            }
             if (collectionDto.getCards()
                              .size() != collectionCards.getItems()
                                                        .size()) {
@@ -204,9 +205,10 @@ public class CardController {
         CardDto selectedCard = searchResult.getSelectionModel()
                                            .getSelectedItem();
         try {
-            collectionDto.getCards()
-                         .add(selectedCard);
-            collectionDto = collectionFacade.save(collectionDto);
+            if (selectedCard != null && collectionDto.getCards()
+                                                     .add(selectedCard)) {
+                collectionDto = collectionFacade.save(collectionDto);
+            }
             if (collectionDto.getCards()
                              .size() != collectionCards.getItems()
                                                        .size()) {
@@ -219,7 +221,7 @@ public class CardController {
             } else {
                 errorMessage.setText("Nothing added to collection");
             }
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             errorMessage.setText("Nothing to add");
         }
     }
